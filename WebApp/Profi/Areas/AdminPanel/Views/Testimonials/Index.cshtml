@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Profi.Models.Testimonials>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-dark">Create New Testimonial</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Theme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Star)
+            </th>
+            <th>Settings</th>
+            <th>More</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a class="text-black"> @Html.DisplayFor(modelItem => item.Name)</a> 
+            </td>
+            <td>
+                <div class="d-flex align-items-center"><img src=~/assets/images/@item.Url alt=avatar /></div>
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <div class=star-rating>
+                    @for (int i = 0; i < item.Star / 2; i++)
+                    {
+                        <i class="mdi mdi-star"></i>
+                    }
+                    @if (item.Star % 2 != 0)
+                    {
+                        <i class="mdi mdi-star-half"></i>
+
+                    }
+                    @if (10 - item.Star != 0)
+                    {
+                        @for (int i = 0; i < (10 - item.Star) / 2; i += 2)
+                        {
+                            <i class="mdi mdi-star-outline"></i>
+                        }
+                    }
+                </div>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-inverse-warning">Edit <i class="mdi mdi-table-edit"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-inverse-danger">Delete <i class="mdi mdi-delete-sweep"></i></a>
+
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-inverse-info">Details <i class="mdi mdi-more"></i></a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
